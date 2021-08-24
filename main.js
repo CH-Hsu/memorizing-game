@@ -38,7 +38,7 @@ const utility = {
     do {
       randCardId = Math.floor(Math.random() * CARD_AMOUNT)
     } while (utility.cardMatched.includes(randCardId) || utility.tempCardId.includes(randCardId))
-    controller.dipatchCardAction(table.children[randCardId])
+    controller.dispatchCardAction(table.children[randCardId])
     /*utility.tempCardId.push(randCardId)*/
   },
   isCardMatched(idFirst, idSecond) {
@@ -88,7 +88,7 @@ const utility = {
               /*console.log(`Card ID: ${this.cardKnown[i]}`)*/
               if (this.cardKnown[i] !== this.tempCardId[0] && this.isCardMatched(this.cardKnown[i], this.tempCardId[0])) {
                 console.log('Find matched!')
-                controller.dipatchCardAction(table.children[this.cardKnown[i]]) //Flip card.
+                controller.dispatchCardAction(table.children[this.cardKnown[i]]) //Flip card.
                 /*this.moveIdfromKnownToMatched(this.cardKnown[i], this.tempCardId[0])*/
                 this.tempCardId = [] //Clear the temp list.
                 return
@@ -211,7 +211,7 @@ const view = {
       <p>You've tried: ${model.currentTimes} times</p>
 			<button type="button" class="btn btn-primary mt-2">Try Again</button>`
 
-    div.addEventListener('click', () => {
+    div.children[3].addEventListener('click', () => {
       controller.setNewGame()
       div.remove()
     }, { once: true })
@@ -255,7 +255,7 @@ const controller = {
       const target = event.target
 
       if (target.matches('.poker')) {
-        controller.dipatchCardAction(target)
+        controller.dispatchCardAction(target)
       }
     })
   },
@@ -267,7 +267,7 @@ const controller = {
     utility.toggleAvailableAutoPlaying() //Enable auto playing button.
     utility.resetAutoRecord() //Reset auto playing record.
   },
-  dipatchCardAction(card) {
+  dispatchCardAction(card) {
     if (!card.matches('.covered')) return
     view.flipCards(card)
     model.revealedCards.push(card)
